@@ -1,28 +1,3 @@
-colorPrices = [
-	200,
-	300,
-	400,
-	500,
-]
-
-shelvesPrices = [
-	200,
-	300,
-	400,
-]
-
-mountPrices = [
-	200,
-	300,
-]
-
-deliveryPrices = [
-	200,
-	300,
-	400,
-	500,
-]
-
 function recalculate() {
 	let inputs = document.getElementById("main-form").elements;
 
@@ -33,15 +8,34 @@ function recalculate() {
 	let mount = mountPrices[inputs["mount"].value];
 	let delivery = deliveryPrices[inputs["delivery"].value];
 
-	let alderPrice = width + length + color + shelves + mount + delivery;
-	let fraxinusPrice = width + length + color + shelves + mount + delivery + 200;
+	let calculatedPrices = formula(width, length, color, shelves, mount, delivery);
 
-	document.getElementById("price1").textContent = alderPrice;
-	document.getElementById("price2").textContent = fraxinusPrice;
+	document.getElementById("price1").textContent = calculatedPrices.alderPrice;
+	document.getElementById("price2").textContent = calculatedPrices.fraxinusPrice;
 }
 
 function send() {
-	let inputs = document.getElementById("main-form").elements;
+	let mainInputs = document.getElementById("main-form").elements;
+	let contactInputs = document.getElementById("contact-form").elements;
+
+	let width = mainInputs["width"].value;
+	let length = mainInputs["leng"].value;
+	let color = mainInputs["color"].value;
+	let shelves = mainInputs["shelf"].value;
+	let mount = mainInputs["mount"].value;
+	let delivery = mainInputs["delivery"].value;
+	let telephone = contactInputs["telephone"].value;
+	let address = contactInputs["address"].value;
+
+	let payload = JSON.stringify({width, length, color, shelves, mount, delivery, telephone, address});
+
+	fetch("https://awoodstore-mail-server-prod.herokuapp.com/", {
+		method: "POST",
+		headers: {'Content-Type': 'application/json'},
+		body: payload
+	}).then(res => {
+		console.log("Request complete! response: ", res);
+	});
 }
 
 recalculate();

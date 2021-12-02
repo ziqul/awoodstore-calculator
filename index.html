@@ -7,46 +7,46 @@
 		<input type="range" min="1" max="250" value="150" name="leng">
 
 		<h4>Color</h4>
-		<input type="radio" value="0" name="color" checked="checked">
+		<input type="radio" value="natural" name="color" checked="checked">
 		<label>Natural</label>
 		<br>
-		<input type="radio" value="1" name="color">
+		<input type="radio" value="venge" name="color">
 		<label>Venge</label>
 		<br>
-		<input type="radio" value="2" name="color">
+		<input type="radio" value="dark-walnut" name="color">
 		<label>Dark Walnut</label>
 		<br>
-		<input type="radio" value="3" name="color">
+		<input type="radio" value="white" name="color">
 		<label>White</label>
 
 		<h4>Shelves</h4>
-		<input type="radio" value="0" name="shelf" checked="checked">
+		<input type="radio" value="no-shelves" name="shelf" checked="checked">
 		<label>No Shelves</label>
 		<br>
-		<input type="radio" value="1" name="shelf">
+		<input type="radio" value="2-shelves" name="shelf">
 		<label>2 Shelves</label>
 		<br>
-		<input type="radio" value="2" name="shelf">
+		<input type="radio" value="4-shelves" name="shelf">
 		<label>4 Shelves</label>
 
 		<h4>Mount</h4>
-		<input type="radio" value="0" name="mount" checked="checked">
+		<input type="radio" value="bolts" name="mount" checked="checked">
 		<label>Bolts</label>
 		<br>
-		<input type="radio" value="1" name="mount">
+		<input type="radio" value="hidden-mounts" name="mount">
 		<label>Hidden Mounts</label>
 
 		<h4>Delivery</h4>
-		<input type="radio" value="0" name="delivery" checked="checked">
+		<input type="radio" value="no-delivery" name="delivery" checked="checked">
 		<label>No Delivery</label>
 		<br>
-		<input type="radio" value="1" name="delivery">
+		<input type="radio" value="odessa-delivery" name="delivery">
 		<label>Delivery in Odessa</label>
 		<br>
-		<input type="radio" value="2" name="delivery">
+		<input type="radio" value="odessa-delivery-and-assembly" name="delivery">
 		<label>Delivery and Assembly in Odessa</label>
 		<br>
-		<input type="radio" value="3" name="delivery">
+		<input type="radio" value="nova-poshta" name="delivery">
 		<label>Delivery by Nova Poshta</label>
 	</form>
 	<div class="price-block" id="price">
@@ -55,14 +55,47 @@
 		<h4>Стоимость из Ясеня:</h4>
 		<p id="price2"></p>
 	</div>
-	<form class="contact-block" id="contact">
+	<form class="contact-block" id="contact-form">
 		<h4>Обратная связь</h4>
 		<input type="tel" name="telephone" placeholder="+38(067)-828-13-14">
 		<h4>Адрес</h4>
 		<input type="text" name="address" placeholder="г. Одесса, ул. Канатная, д. 7, кв. 41">
 	</form>
 	<div class="order-block" id="order-block">
-		<button type="button" class="order-button" id="order-button">Заказать</button>
+		<button type="button" class="order-button" id="order-button" onclick="send()">Заказать</button>
 	</div>
+	<script>
+		colorPrices = {
+			"natural": 200,
+			"venge": 300,
+			"dark-walnut": 400,
+			"white": 500,
+		}
+		
+		shelvesPrices = {
+			"no-shelves": 300,
+			"2-shelves": 300,
+			"4-shelves": 400,
+		}
+		
+		mountPrices = {
+			"bolts": 200,
+			"hidden-mounts": 300,
+		}
+		
+		deliveryPrices = {
+			"no-delivery": 200,
+			"odessa-delivery": 300,
+			"odessa-delivery-and-assembly": 400,
+			"nova-poshta": 500,
+		}
+		
+		function formula(width, length, color, shelves, mount, delivery) {
+			let alderPrice = width + length + color + shelves + mount + delivery;
+			let fraxinusPrice = width + length + color + shelves + mount + delivery + 200;
+		
+			return {alderPrice, fraxinusPrice}
+		}
+	</script>
 	<script src="index.js"></script>
 </div>
