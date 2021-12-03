@@ -1,52 +1,52 @@
 <div id="calculator" class="calculator">
 	<form class="main-block" id="main-form">
 		<h4>Width (см)</h4>
-		<input type="range" min="1" max="250" value="150" name="width">
+		<input type="range" min="1" max="250" value="150" name="width" class="width-input">
 
 		<h4>Lenght (см)</h4>
-		<input type="range" min="1" max="250" value="150" name="leng">
+		<input type="range" min="1" max="250" value="150" name="leng" class="length-input">
 
 		<h4>Color</h4>
-		<input type="radio" value="natural" name="color" checked="checked">
+		<input type="radio" value="natural" name="color" checked="checked" class="color-input">
 		<label>Natural</label>
 		<br>
-		<input type="radio" value="venge" name="color">
+		<input type="radio" value="venge" name="color" class="color-input">
 		<label>Venge</label>
 		<br>
-		<input type="radio" value="dark-walnut" name="color">
+		<input type="radio" value="dark-walnut" name="color" class="color-input">
 		<label>Dark Walnut</label>
 		<br>
-		<input type="radio" value="white" name="color">
+		<input type="radio" value="white" name="color" class="color-input">
 		<label>White</label>
 
 		<h4>Shelves</h4>
-		<input type="radio" value="no-shelves" name="shelf" checked="checked">
+		<input type="radio" value="no-shelves" name="shelf" checked="checked" class="shelves-input">
 		<label>No Shelves</label>
 		<br>
-		<input type="radio" value="2-shelves" name="shelf">
+		<input type="radio" value="2-shelves" name="shelf" class="shelves-input">
 		<label>2 Shelves</label>
 		<br>
-		<input type="radio" value="4-shelves" name="shelf">
+		<input type="radio" value="4-shelves" name="shelf" class="shelves-input">
 		<label>4 Shelves</label>
 
 		<h4>Mount</h4>
-		<input type="radio" value="bolts" name="mount" checked="checked">
+		<input type="radio" value="bolts" name="mount" checked="checked" class="mount-input">
 		<label>Bolts</label>
 		<br>
-		<input type="radio" value="hidden-mounts" name="mount">
+		<input type="radio" value="hidden-mounts" name="mount" class="mount-input">
 		<label>Hidden Mounts</label>
 
 		<h4>Delivery</h4>
-		<input type="radio" value="no-delivery" name="delivery" checked="checked">
+		<input type="radio" value="no-delivery" name="delivery" checked="checked" class="delivery-input">
 		<label>No Delivery</label>
 		<br>
-		<input type="radio" value="odessa-delivery" name="delivery">
+		<input type="radio" value="odessa-delivery" name="delivery" class="delivery-input">
 		<label>Delivery in Odessa</label>
 		<br>
-		<input type="radio" value="odessa-delivery-and-assembly" name="delivery">
+		<input type="radio" value="odessa-delivery-and-assembly" name="delivery" class="delivery-input">
 		<label>Delivery and Assembly in Odessa</label>
 		<br>
-		<input type="radio" value="nova-poshta" name="delivery">
+		<input type="radio" value="nova-poshta" name="delivery" class="delivery-input">
 		<label>Delivery by Nova Poshta</label>
 	</form>
 	<div class="price-block" id="price">
@@ -57,9 +57,9 @@
 	</div>
 	<form class="contact-block" id="contact-form">
 		<h4>Обратная связь</h4>
-		<input type="tel" name="telephone" placeholder="+38(067)-828-13-14">
+		<input type="tel" name="telephone" placeholder="+38(067)-828-13-14" class="telephone-input">
 		<h4>Адрес</h4>
-		<input type="text" name="address" placeholder="г. Одесса, ул. Канатная, д. 7, кв. 41">
+		<input type="text" name="address" placeholder="г. Одесса, ул. Канатная, д. 7, кв. 41" class="address-input">
 	</form>
 	<div class="order-block" id="order-block">
 		<button type="button" class="order-button" id="order-button" onclick="send()">Заказать</button>
@@ -93,31 +93,31 @@
 		function formula(width, length, color, shelves, mount, delivery) {
 			let alderPrice = width + length + color + shelves + mount + delivery;
 			let fraxinusPrice = width + length + color + shelves + mount + delivery + 200;
-		
+
 			return {alderPrice, fraxinusPrice}
 		}
 	</script>
 	<script>
 		function recalculate() {
 			let inputs = document.getElementById("main-form").elements;
-		
+
 			let width = parseInt(inputs["width"].value);
 			let length = parseInt(inputs["leng"].value);
 			let color = colorPrices[inputs["color"].value];
 			let shelves = shelvesPrices[inputs["shelf"].value];
 			let mount = mountPrices[inputs["mount"].value];
 			let delivery = deliveryPrices[inputs["delivery"].value];
-		
+
 			let calculatedPrices = formula(width, length, color, shelves, mount, delivery);
-		
+
 			document.getElementById("price1").textContent = calculatedPrices.alderPrice;
 			document.getElementById("price2").textContent = calculatedPrices.fraxinusPrice;
 		}
-		
+
 		function send() {
 			let mainInputs = document.getElementById("main-form").elements;
 			let contactInputs = document.getElementById("contact-form").elements;
-		
+
 			let width = mainInputs["width"].value;
 			let length = mainInputs["leng"].value;
 			let color = mainInputs["color"].value;
@@ -126,9 +126,10 @@
 			let delivery = mainInputs["delivery"].value;
 			let telephone = contactInputs["telephone"].value;
 			let address = contactInputs["address"].value;
-		
-			let payload = JSON.stringify({width, length, color, shelves, mount, delivery, telephone, address});
-		
+			let page = window.location.href;
+
+			let payload = JSON.stringify({width, length, color, shelves, mount, delivery, telephone, address, page});
+
 			fetch("https://awoodstore-mail-server-prod.herokuapp.com/", {
 				method: "POST",
 				headers: {'Content-Type': 'application/json'},
@@ -137,9 +138,9 @@
 				console.log("Request complete! response: ", res);
 			});
 		}
-		
+
 		recalculate();
-		
+
 		var form = document.getElementById("main-form");
 		form.addEventListener("change", function() {
 			recalculate();
